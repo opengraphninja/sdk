@@ -29,7 +29,7 @@ $ yarn add @opengraphninja/sdk
 Then, you need to import two things in your code - the SDK itself and the default styles (if you don't want to override them, that is):
 
 ```tsx
-import * as OpenGraphNinja from "@opengraphninja/sdk";
+import initOpenGraphNinja from "@opengraphninja/sdk";
 import "@opengraphninja/sdk/styles.css"; // remember the default styles
 ```
 
@@ -47,7 +47,7 @@ In that case, you'll find the `OpenGraphNinja` namespace on your `window` object
 
 ```js
 document.addEventListener("domcontentloaded", () => {
-  window.OpenGraphNinja.initialize();
+  window.OpenGraphNinja();
 });
 ```
 
@@ -57,7 +57,7 @@ Using the React component is pretty easy:
 
 ```tsx
 import "@opengraphninja/sdk/styles.css";
-import { PreviewLink } from "@opengraphninja/sdk";
+import { PreviewLink } from "@opengraphninja/sdk/react";
 
 export const App = () => {
   return <PreviewLink href="https://opengraph.ninja" />;
@@ -70,7 +70,7 @@ If you want to design your own preview, you can use the React hook `usePreviewDa
 
 ```tsx
 import "@opengraphninja/sdk/styles.css";
-import { usePreviewData } from "@opengraphninja/sdk";
+import { usePreviewData } from "@opengraphninja/sdk/react";
 
 type Props = { href: string };
 export const SimplePreview = (props: Props) => {
@@ -89,10 +89,10 @@ export const SimplePreview = (props: Props) => {
 If you're not using React, you can use a script that turns regular links into previews.
 
 ```ts
-import { initialize } from "@opengraphninja/sdk";
+import initializeOpenGraphNinja from "@opengraphninja/sdk";
 
 document.addEventListener("domcontentloaded", () => {
-  initialize();
+  initializeOpenGraphNinja();
 });
 ```
 
