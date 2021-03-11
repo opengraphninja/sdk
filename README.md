@@ -10,11 +10,10 @@ This library contains the code you need to generate nice-looking previews of sta
 
 ## Usage
 
-This package contains three things:
+This package contains two things:
 
 - an automated script for previewing URLs
-- a React component for previewing URLs
-- a React hook for getting the preview data
+- some default styles for those previews
 
 ### Setup
 
@@ -36,7 +35,10 @@ import "@opengraphninja/sdk/styles.css"; // remember the default styles
 You can also include it as script tags and link tags if that works best:
 
 ```html
-<script defer src="https://unpkg.com/@opengraphninja/sdk"></script>
+<script
+  defer
+  src="https://unpkg.com/@opengraphninja/sdk/dist/umd/opengraphninja.umd.production.min.js"
+></script>
 <link
   rel="stylesheet"
   href="https://unpkg.com/@opengraphninja/sdk/styles.css"
@@ -51,48 +53,15 @@ document.addEventListener("domcontentloaded", () => {
 });
 ```
 
-### Using the React component
-
-Using the React component is pretty easy:
-
-```tsx
-import "@opengraphninja/sdk/styles.css";
-import { PreviewLink } from "@opengraphninja/sdk/react";
-
-export const App = () => {
-  return <PreviewLink href="https://opengraph.ninja" />;
-};
-```
-
-### Using the React hook
-
-If you want to design your own preview, you can use the React hook `usePreviewData`:
-
-```tsx
-import "@opengraphninja/sdk/styles.css";
-import { usePreviewData } from "@opengraphninja/sdk/react";
-
-type Props = { href: string };
-export const SimplePreview = (props: Props) => {
-  const { title, description } = usePreviewData(props.href);
-  return (
-    <div>
-      <h2>{title}</h2>
-      <p>{description}</p>
-    </div>
-  );
-};
-```
-
 ### Using the automated script
 
-If you're not using React, you can use a script that turns regular links into previews.
+Let's turn those regular links into cool previews!
 
 ```ts
-import initializeOpenGraphNinja from "@opengraphninja/sdk";
+import * as OpenGraphNinja from "@opengraphninja/sdk";
 
 document.addEventListener("domcontentloaded", () => {
-  initializeOpenGraphNinja();
+  OpenGraphNinja.initialize();
 });
 ```
 
@@ -100,45 +69,54 @@ By default, this script will find all links that are the only child inside of a 
 
 You can ignore a particular link or sub-section of your page by adding the `data-ogn-ignore` attribute to either the link or any ancestor.
 
-Here are some examples to make things a bit more clear (all examples assuming we're inside of a `<main />` tag):
+Here are some examples to make things a bit more clear :
 
 ```html
-<!-- Will be converted to preview -->
-<p><a href="https://some.url">https://some.url</a></p>
-
-<!-- Will be converted to preview -->
-<p><a href="https://some.url">Check this link</a></p>
-
-<!-- Will not be converted to preview -->
-<p>
-  <strong><a href="https://some.url">https://some.url</a></strong>
-</p>
-
-<!-- Will not be converted to preview -->
-<p>
-  <a href="https://some.url">https://some.url</a>
-  <a href="https://some.url">https://some.url</a>
-</p>
-
-<!-- Will not be converted to preview -->
-<p>
-  Check out this link!
-  <a href="https://some.url">https://some.url</a>
-</p>
-
-<!-- Will not be converted to preview -->
-<div>
-  <a href="https://some.url">https://some.url</a>
-</div>
-
-<!-- Will not be converted to preview -->
-<p><a href="https://some.url" data-ogn-ignore>https://some.url</a></p>
-
-<!-- Will not be converted to preview -->
-<div data-ogn-ignore>
+<main>
+  <!-- Will be converted to preview -->
   <p><a href="https://some.url">https://some.url</a></p>
-</div>
+
+  <!-- Will be converted to preview -->
+  <p><a href="https://some.url">Check this link</a></p>
+
+  <!-- Will not be converted to preview -->
+  <p>
+    <strong><a href="https://some.url">https://some.url</a></strong>
+  </p>
+
+  <!-- Will not be converted to preview -->
+  <p>
+    <a href="https://some.url">https://some.url</a>
+    <a href="https://some.url">https://some.url</a>
+  </p>
+
+  <!-- Will not be converted to preview -->
+  <p>
+    Check out this link!
+    <a href="https://some.url">https://some.url</a>
+  </p>
+
+  <!-- Will not be converted to preview -->
+  <div>
+    <a href="https://some.url">https://some.url</a>
+  </div>
+
+  <!-- Will not be converted to preview -->
+  <p><a href="https://some.url" data-ogn-ignore>https://some.url</a></p>
+
+  <!-- Will not be converted to preview -->
+  <div data-ogn-ignore>
+    <p><a href="https://some.url">https://some.url</a></p>
+  </div>
+</main>
+
+<!-- Will not be converted since outside of main tag -->
+<p><a href="https://some.url">https://some.url</a></p>
 ```
+
+## React version
+
+If you're using React, you can use [@opengraphninja/react](https://github.com/opengraphninja/react) to create cool previews there as well.
 
 ## Questions and feature requests?
 
