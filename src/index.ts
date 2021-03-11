@@ -41,7 +41,7 @@ export function initialize(options: OpenGraphNinjaProps | undefined = {}) {
 
         const body = await api.getData(href);
         el.parentElement!.innerHTML = `
-        <a class="ogn-container" href="${href}">
+        <a class="ogn-container" href="${body.requestUrl}">
           ${
             body.image
               ? `<img src="${body.image.url}" alt="${body.image?.alt ||
