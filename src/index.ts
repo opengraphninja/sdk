@@ -1,7 +1,13 @@
 import * as api from "./api";
 import type { PreviewData } from "./api";
 
-type OpenGraphNinjaProps =
+// Re-exported so consumers can type their own code against the payload. The
+// `exports` map has no `./dist/*` entry, so reaching into the build is not an
+// option for them.
+export type { PreviewData } from "./api";
+export type { Details } from "./types";
+
+export type OpenGraphNinjaProps =
   | {
       /** The CSS selector used to select all links
        *

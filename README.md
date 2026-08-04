@@ -129,6 +129,10 @@ in the build config:
 | `dist/opensourceninja.cjs.development.js`    | `dist/opengraphninja.js`     |
 | `window.OpenSourceNinja`                     | `window.OpenGraphNinja`      |
 
+The CDN URLs above still work, since unpkg serves files directly. Importing from inside `dist` in
+your own code (`@opengraphninja/sdk/dist/...`) no longer resolves, though — the package now has an
+`exports` map. The `PreviewData` and `Details` types are exported from the package root instead.
+
 ## React version
 
 If you're using React, you can use [@opengraphninja/react](https://github.com/opengraphninja/react) to create cool previews there as well.

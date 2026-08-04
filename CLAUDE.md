@@ -42,8 +42,9 @@ These are load-bearing; changing them tends to break the build in non-obvious wa
 - **jsdom is pinned to `^29`.** jsdom 30 requires Node `^24.15.0`; the dev machine runs 24.13.
 - **`vitest.config.mts` needs the `.mts` extension.** As `.ts` it is loaded as CommonJS and Vite
   warns about the ESM syntax.
-- Removing oxlint in favour of typescript-eslint would cap TypeScript at `<6.1.0` — that peer range
-  is why the package sat on TS 6 before oxlint replaced eslint.
+- typescript-eslint's peer range caps TypeScript at `<6.1.0`, which is why it isn't used here.
+- `engines.node` describes what _consumers_ need. The devDeps want more: vite 8 and oxlint need
+  `^20.19.0 || >=22.12.0`, and vitest 4 wants `^20 || ^22 || >=24`.
 
 ## Architecture
 
