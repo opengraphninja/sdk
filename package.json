@@ -1,52 +1,71 @@
 {
-  "version": "0.1.6",
+  "name": "@opengraphninja/sdk",
+  "version": "0.2.0",
+  "description": "Turn stand-alone links into good-looking previews",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "author": "Kristofer Giltvedt Selbekk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opengraphninja/sdk.git"
+  },
   "files": [
     "dist",
-    "src", 
+    "src",
     "styles.css"
   ],
-  "engines": {
-    "node": ">=10"
+  "sideEffects": false,
+  "main": "./dist/opengraphninja.js",
+  "module": "./dist/opengraphninja.mjs",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/opengraphninja.min.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/opengraphninja.mjs",
+      "require": "./dist/opengraphninja.js"
+    },
+    "./styles.css": "./styles.css",
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build --format cjs,esm,umd --name OpenSourceNinja",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "npm run build",
+    "build": "tsup && tsc -p tsconfig.build.json",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "prepare": "npm run build"
   },
-  "peerDependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^13.0.3",
+    "jsdom": "^29.1.1",
+    "oxfmt": "^0.62.0",
+    "oxlint": "^1.77.0",
+    "size-limit": "^13.0.3",
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
   },
-  "name": "@opengraphninja/sdk",
-  "author": "Kristofer Giltvedt Selbekk",
-  "module": "dist/sdk.esm.js",
   "size-limit": [
     {
-      "path": "dist/sdk.cjs.production.min.js",
+      "path": "dist/opengraphninja.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/sdk.esm.js",
+      "path": "dist/opengraphninja.mjs",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/opengraphninja.min.js",
       "limit": "10 KB"
     }
   ],
-  "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.1",
-    "@testing-library/dom": "^7.30.0",
-    "husky": "^5.1.3",
-    "size-limit": "^4.10.1",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.1.0",
-    "typescript": "^4.2.3"
-  },
-  "dependencies": {}
+  "engines": {
+    "node": ">=20"
+  }
 }

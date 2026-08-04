@@ -28,28 +28,22 @@ $ yarn add @opengraphninja/sdk
 Then, you need to import two things in your code - the SDK itself and the default styles (if you don't want to override them, that is):
 
 ```tsx
-import initOpenGraphNinja from "@opengraphninja/sdk";
+import { initialize } from "@opengraphninja/sdk";
 import "@opengraphninja/sdk/styles.css"; // remember the default styles
 ```
 
 You can also include it as script tags and link tags if that works best:
 
 ```html
-<script
-  defer
-  src="https://unpkg.com/@opengraphninja/sdk/dist/umd/opengraphninja.umd.production.min.js"
-></script>
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/@opengraphninja/sdk/styles.css"
-/>
+<script defer src="https://unpkg.com/@opengraphninja/sdk/dist/opengraphninja.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@opengraphninja/sdk/styles.css" />
 ```
 
 In that case, you'll find the `OpenGraphNinja` namespace on your `window` object.
 
 ```js
-document.addEventListener("domcontentloaded", () => {
-  window.OpenGraphNinja();
+document.addEventListener("DOMContentLoaded", () => {
+  window.OpenGraphNinja.initialize();
 });
 ```
 
@@ -58,10 +52,10 @@ document.addEventListener("domcontentloaded", () => {
 Let's turn those regular links into cool previews!
 
 ```ts
-import * as OpenGraphNinja from "@opengraphninja/sdk";
+import { initialize } from "@opengraphninja/sdk";
 
-document.addEventListener("domcontentloaded", () => {
-  OpenGraphNinja.initialize();
+document.addEventListener("DOMContentLoaded", () => {
+  initialize();
 });
 ```
 
@@ -113,6 +107,27 @@ Here are some examples to make things a bit more clear :
 <!-- Will not be converted since outside of main tag -->
 <p><a href="https://some.url">https://some.url</a></p>
 ```
+
+### Options
+
+`initialize` takes an optional `linkSelector` if the default doesn't fit your markup:
+
+```ts
+initialize({ linkSelector: ".post p > a:only-child" });
+```
+
+## Upgrading to 0.2.0
+
+If you import the package by name, nothing changes. If you load it from a CDN or reach into `dist`
+directly, the bundles were renamed — the old ones were called `opensourceninja.*` because of a typo
+in the build config:
+
+| Before                                       | Now                          |
+| -------------------------------------------- | ---------------------------- |
+| `dist/opensourceninja.umd.production.min.js` | `dist/opengraphninja.min.js` |
+| `dist/opensourceninja.esm.js`                | `dist/opengraphninja.mjs`    |
+| `dist/opensourceninja.cjs.development.js`    | `dist/opengraphninja.js`     |
+| `window.OpenSourceNinja`                     | `window.OpenGraphNinja`      |
 
 ## React version
 

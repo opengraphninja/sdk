@@ -12,17 +12,18 @@ export type PreviewData = {
   details: Details;
 };
 
-type Error = {
+type ApiError = {
   error: string;
 };
 
-export const getData = async (href: string) => {
-  const response = await fetch(
-    `https://opengraph.ninja/api/v1?encodedUrl=${btoa(href)}`
-  );
-  const body = await response.json();
+export const getData = async (href: string): Promise<PreviewData> => {
+  const response = await fetch(`https://opengraph.ninja/api/v1?encodedUrl=${btoa(href)}`);
+  const body: unknown = await response.json();
   if (!response.ok) {
-    throw body as Error;
+    const { error } = body as ApiError;
+    throw new Error(error || `Request failed with status ${response.status}`, {
+      cause: body,
+    });
   }
   return body as PreviewData;
 };

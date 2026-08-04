@@ -1,0 +1,14 @@
+{
+  // Declarations are emitted by tsc rather than by tsup: tsup's dts builder
+  // injects the `baseUrl` compiler option, which TypeScript 6 has deprecated.
+  "extends": "./tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": []
+  }
+}
